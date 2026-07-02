@@ -1,0 +1,215 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  SUPER_ADMIN
+  COLLEGE_ADMIN
+  DEPARTMENT_ADMIN
+  FACULTY
+  STUDENT
+  GUEST
+}
+
+model College {
+  id            String         @id @default(uuid())
+  name          String
+  domain        String?        @unique
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  
+  users         User[]
+  buildings     Building[]
+  floors        Floor[]
+  rooms         Room[]
+  departments   Department[]
+  faculty       Faculty[]
+  events        Event[]
+  announcements Announcement[]
+  nodes         NavigationNode[]
+  edges         NavigationEdge[]
+  assets        Asset[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  qrCodes       QRCode[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  collegeId String?
+  college   College? @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  fullName  String
+  email     String   @unique
+  password  String
+  role      Role     @default(GUEST)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  auditLogs AuditLog[]
+}
+
+model Building {
+  id          String   @id @default(uuid())
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  name        String
+  code        String
+  description String?
+  floors      Floor[]
+  
+  @@unique([collegeId, code])
+}
+
+model Floor {
+  id          String   @id @default(uuid())
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  buildingId  String
+  building    Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  floorNumber Int
+  floorName   String
+  rooms       Room[]
+  nodes       NavigationNode[]
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  floorId     String
+  floor       Floor    @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  roomNumber  String
+  roomName    String
+  category    String   // e.g., CLASSROOM, LAB, OFFICE, WASHROOM, STAIRCASE, LIFT, EXIT
+  capacity    Int?
+  xCoordinate Float
+  yCoordinate Float
+  width       Float
+  height      Float
+  rotation    Float    @default(0)
+  events      Event[]
+  faculty     Faculty[]
+  qrCodes     QRCode[]
+  assets      Asset[]
+}
+
+model Department {
+  id          String    @id @default(uuid())
+  collegeId   String
+  college     College   @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  name        String
+  code        String
+  faculty     Faculty[]
+  
+  @@unique([collegeId, code])
+}
+
+model Faculty {
+  id           String     @id @default(uuid())
+  collegeId    String
+  college      College    @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  name         String
+  designation  String?
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  roomId       String?
+  room         Room?      @relation(fields: [roomId], references: [id], onDelete: SetNull)
+}
+
+model NavigationNode {
+  id        String  @id @default(uuid())
+  collegeId String
+  college   College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  floorId   String
+  floor     Floor   @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  x         Float
+  y         Float
+  outgoing  NavigationEdge[] @relation("SourceNode")
+  incoming  NavigationEdge[] @relation("TargetNode")
+}
+
+model NavigationEdge {
+  id         String         @id @default(uuid())
+  collegeId  String
+  college    College        @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  fromNodeId String
+  toNodeId   String
+  distance   Float
+  type       String         @default("CORRIDOR") // e.g., CORRIDOR, STAIRS, LIFT
+  isAccessible Boolean      @default(true)
+  fromNode   NavigationNode @relation("SourceNode", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNode     NavigationNode @relation("TargetNode", fields: [toNodeId], references: [id], onDelete: Cascade)
+
+  @@unique([fromNodeId, toNodeId])
+}
+
+model Event {
+  id        String   @id @default(uuid())
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  title     String
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  startTime DateTime
+  endTime   DateTime
+}
+
+model Announcement {
+  id          String   @id @default(uuid())
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model QRCode {
+  id        String   @id @default(uuid())
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  code      String   @unique
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
+
+model Asset {
+  id        String   @id @default(uuid())
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  type      String   // e.g., PROJECTOR, WHITEBOARD, DOOR, WINDOW
+  name      String?
+  x         Float?
+  y         Float?
+  width     Float?
+  height    Float?
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String
+  details   String?
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
