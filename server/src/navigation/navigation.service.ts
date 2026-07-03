@@ -160,6 +160,9 @@ export class NavigationService {
     edgesData: any[],
   ) {
     return this.prisma.$transaction(async (tx) => {
+      const floor = await tx.floor.findUnique({ where: { id: floorId } });
+      if (!floor) throw new NotFoundException('Floor not found');
+      const collegeId = floor.collegeId;
       // 1. Delete all existing edges that start or end at nodes belonging to this floor
       const existingNodes = await tx.navigationNode.findMany({
         where: { floorId },
@@ -215,9 +218,10 @@ export class NavigationService {
         } else {
           const r = await tx.room.create({
             data: {
+              collegeId,
               ...roomPayload,
               id: room.id && room.id.includes('-') ? room.id : undefined,
-              floor: { connect: { id: floorId } },
+              floorId,
             },
           });
           createdOrUpdatedRooms.push(r);
@@ -231,9 +235,10 @@ export class NavigationService {
       for (const node of nodesData) {
         const n = await tx.navigationNode.create({
           data: {
+            collegeId,
             x: parseFloat(node.x),
             y: parseFloat(node.y),
-            floor: { connect: { id: floorId } },
+            floorId,
           },
         });
         idMapping.set(node.id, n.id);
@@ -250,6 +255,7 @@ export class NavigationService {
 
         const e = await tx.navigationEdge.create({
           data: {
+            collegeId,
             fromNodeId: fromId,
             toNodeId: toId,
             distance: parseFloat(edge.distance) || 1,

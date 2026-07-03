@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 export class FloorsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.FloorCreateInput) {
+  create(data: Prisma.FloorUncheckedCreateInput) {
     return this.prisma.floor.create({ data, include: { building: true } });
   }
 
@@ -33,7 +33,7 @@ export class FloorsRepository {
     return this.prisma.floor.findMany({ where: { buildingId }, orderBy: { floorNumber: 'asc' } });
   }
 
-  update(id: string, data: Prisma.FloorUpdateInput) {
+  update(id: string, data: Prisma.FloorUncheckedUpdateInput) {
     return this.prisma.floor.update({ where: { id }, data });
   }
 

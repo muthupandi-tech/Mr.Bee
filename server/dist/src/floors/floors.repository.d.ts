@@ -3,10 +3,10 @@ import { Prisma } from '@prisma/client';
 export declare class FloorsRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(data: Prisma.FloorCreateInput): Prisma.Prisma__FloorClient<{
+    create(data: Prisma.FloorUncheckedCreateInput): Prisma.Prisma__FloorClient<{
         building: {
-            id: string;
             name: string;
+            id: string;
             collegeId: string;
             code: string;
             description: string | null;
@@ -20,8 +20,8 @@ export declare class FloorsRepository {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): Prisma.PrismaPromise<({
         building: {
-            id: string;
             name: string;
+            id: string;
             collegeId: string;
             code: string;
             description: string | null;
@@ -34,6 +34,13 @@ export declare class FloorsRepository {
         floorName: string;
     })[]>;
     findById(id: string): Prisma.Prisma__FloorClient<{
+        building: {
+            name: string;
+            id: string;
+            collegeId: string;
+            code: string;
+            description: string | null;
+        };
         rooms: {
             id: string;
             collegeId: string;
@@ -65,13 +72,6 @@ export declare class FloorsRepository {
             x: number;
             y: number;
         })[];
-        building: {
-            id: string;
-            name: string;
-            collegeId: string;
-            code: string;
-            description: string | null;
-        };
     } & {
         id: string;
         collegeId: string;
@@ -86,7 +86,7 @@ export declare class FloorsRepository {
         floorNumber: number;
         floorName: string;
     }[]>;
-    update(id: string, data: Prisma.FloorUpdateInput): Prisma.Prisma__FloorClient<{
+    update(id: string, data: Prisma.FloorUncheckedUpdateInput): Prisma.Prisma__FloorClient<{
         id: string;
         collegeId: string;
         buildingId: string;

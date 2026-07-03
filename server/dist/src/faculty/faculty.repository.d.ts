@@ -3,13 +3,7 @@ import { Prisma } from '@prisma/client';
 export declare class FacultyRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(data: Prisma.FacultyCreateInput): Prisma.Prisma__FacultyClient<{
-        department: {
-            id: string;
-            name: string;
-            collegeId: string;
-            code: string;
-        };
+    create(data: Prisma.FacultyUncheckedCreateInput): Prisma.Prisma__FacultyClient<{
         room: {
             id: string;
             collegeId: string;
@@ -24,21 +18,21 @@ export declare class FacultyRepository {
             height: number;
             rotation: number;
         };
+        department: {
+            name: string;
+            id: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
-        id: string;
         name: string;
+        id: string;
         collegeId: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): Prisma.PrismaPromise<({
-        department: {
-            id: string;
-            name: string;
-            collegeId: string;
-            code: string;
-        };
         room: {
             id: string;
             collegeId: string;
@@ -53,21 +47,21 @@ export declare class FacultyRepository {
             height: number;
             rotation: number;
         };
+        department: {
+            name: string;
+            id: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
-        id: string;
         name: string;
+        id: string;
         collegeId: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
     })[]>;
     findById(id: string): Prisma.Prisma__FacultyClient<{
-        department: {
-            id: string;
-            name: string;
-            collegeId: string;
-            code: string;
-        };
         room: {
             id: string;
             collegeId: string;
@@ -82,21 +76,21 @@ export declare class FacultyRepository {
             height: number;
             rotation: number;
         };
+        department: {
+            name: string;
+            id: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
-        id: string;
         name: string;
+        id: string;
         collegeId: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
     }, null, import("@prisma/client/runtime/library").DefaultArgs>;
-    update(id: string, data: Prisma.FacultyUpdateInput): Prisma.Prisma__FacultyClient<{
-        department: {
-            id: string;
-            name: string;
-            collegeId: string;
-            code: string;
-        };
+    update(id: string, data: Prisma.FacultyUncheckedUpdateInput): Prisma.Prisma__FacultyClient<{
         room: {
             id: string;
             collegeId: string;
@@ -111,17 +105,23 @@ export declare class FacultyRepository {
             height: number;
             rotation: number;
         };
+        department: {
+            name: string;
+            id: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
-        id: string;
         name: string;
+        id: string;
         collegeId: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     delete(id: string): Prisma.Prisma__FacultyClient<{
-        id: string;
         name: string;
+        id: string;
         collegeId: string;
         designation: string | null;
         departmentId: string;

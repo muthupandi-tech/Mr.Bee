@@ -6,8 +6,8 @@ export declare class FacultyController {
     create(dto: CreateFacultyDto): import(".prisma/client").Prisma.Prisma__FacultyClient<{
         department: {
             id: string;
-            name: string;
             collegeId: string;
+            name: string;
             code: string;
         };
         room: {
@@ -26,8 +26,8 @@ export declare class FacultyController {
         };
     } & {
         id: string;
-        name: string;
         collegeId: string;
+        name: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
@@ -35,8 +35,8 @@ export declare class FacultyController {
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         department: {
             id: string;
-            name: string;
             collegeId: string;
+            name: string;
             code: string;
         };
         room: {
@@ -55,8 +55,8 @@ export declare class FacultyController {
         };
     } & {
         id: string;
-        name: string;
         collegeId: string;
+        name: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
@@ -64,8 +64,8 @@ export declare class FacultyController {
     findOne(id: string): Promise<{
         department: {
             id: string;
-            name: string;
             collegeId: string;
+            name: string;
             code: string;
         };
         room: {
@@ -84,16 +84,16 @@ export declare class FacultyController {
         };
     } & {
         id: string;
-        name: string;
         collegeId: string;
+        name: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;
     }>;
     remove(id: string): Promise<{
         id: string;
-        name: string;
         collegeId: string;
+        name: string;
         designation: string | null;
         departmentId: string;
         roomId: string | null;

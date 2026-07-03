@@ -7,9 +7,9 @@ export declare class RoomsService {
         floor: {
             id: string;
             collegeId: string;
+            buildingId: string;
             floorNumber: number;
             floorName: string;
-            buildingId: string;
         };
     } & {
         id: string;
@@ -28,18 +28,18 @@ export declare class RoomsService {
     findAll(search?: string): import(".prisma/client").Prisma.PrismaPromise<({
         floor: {
             building: {
-                name: string;
                 id: string;
                 collegeId: string;
+                name: string;
                 code: string;
                 description: string | null;
             };
         } & {
             id: string;
             collegeId: string;
+            buildingId: string;
             floorNumber: number;
             floorName: string;
-            buildingId: string;
         };
     } & {
         id: string;
@@ -72,18 +72,18 @@ export declare class RoomsService {
     findOne(id: string): Promise<{
         floor: {
             building: {
-                name: string;
                 id: string;
                 collegeId: string;
+                name: string;
                 code: string;
                 description: string | null;
             };
         } & {
             id: string;
             collegeId: string;
+            buildingId: string;
             floorNumber: number;
             floorName: string;
-            buildingId: string;
         };
         events: {
             id: string;
@@ -94,9 +94,9 @@ export declare class RoomsService {
             endTime: Date;
         }[];
         faculty: {
-            name: string;
             id: string;
             collegeId: string;
+            name: string;
             roomId: string | null;
             designation: string | null;
             departmentId: string;

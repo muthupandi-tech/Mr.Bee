@@ -7,12 +7,7 @@ export class EventsService {
   constructor(private readonly repo: EventsRepository) {}
 
   create(dto: CreateEventDto) {
-    return this.repo.create({
-      title: dto.title,
-      startTime: new Date(dto.startTime),
-      endTime: new Date(dto.endTime),
-      room: { connect: { id: dto.roomId } },
-    });
+    return this.repo.create(dto);
   }
 
   findAll() { return this.repo.findAll(); }

@@ -5,31 +5,31 @@ export declare class FloorsController {
     constructor(service: FloorsService);
     create(dto: CreateFloorDto): import(".prisma/client").Prisma.Prisma__FloorClient<{
         building: {
-            name: string;
             id: string;
             collegeId: string;
+            name: string;
             code: string;
             description: string | null;
         };
     } & {
         id: string;
         collegeId: string;
+        buildingId: string;
         floorNumber: number;
         floorName: string;
-        buildingId: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(buildingId?: string): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
         collegeId: string;
+        buildingId: string;
         floorNumber: number;
         floorName: string;
-        buildingId: string;
     }[]>;
     findOne(id: string): Promise<{
         building: {
-            name: string;
             id: string;
             collegeId: string;
+            name: string;
             code: string;
             description: string | null;
         };
@@ -51,10 +51,10 @@ export declare class FloorsController {
             outgoing: {
                 id: string;
                 collegeId: string;
-                type: string;
                 fromNodeId: string;
                 toNodeId: string;
                 distance: number;
+                type: string;
                 isAccessible: boolean;
             }[];
         } & {
@@ -67,15 +67,15 @@ export declare class FloorsController {
     } & {
         id: string;
         collegeId: string;
+        buildingId: string;
         floorNumber: number;
         floorName: string;
-        buildingId: string;
     }>;
     remove(id: string): Promise<{
         id: string;
         collegeId: string;
+        buildingId: string;
         floorNumber: number;
         floorName: string;
-        buildingId: string;
     }>;
 }

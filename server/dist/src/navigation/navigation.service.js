@@ -138,6 +138,10 @@ let NavigationService = class NavigationService {
     }
     async saveLayout(floorId, roomsData, nodesData, edgesData) {
         return this.prisma.$transaction(async (tx) => {
+            const floor = await tx.floor.findUnique({ where: { id: floorId } });
+            if (!floor)
+                throw new common_1.NotFoundException('Floor not found');
+            const collegeId = floor.collegeId;
             const existingNodes = await tx.navigationNode.findMany({
                 where: { floorId },
                 select: { id: true },
@@ -185,9 +189,10 @@ let NavigationService = class NavigationService {
                 else {
                     const r = await tx.room.create({
                         data: {
+                            collegeId,
                             ...roomPayload,
                             id: room.id && room.id.includes('-') ? room.id : undefined,
-                            floor: { connect: { id: floorId } },
+                            floorId,
                         },
                     });
                     createdOrUpdatedRooms.push(r);
@@ -198,9 +203,10 @@ let NavigationService = class NavigationService {
             for (const node of nodesData) {
                 const n = await tx.navigationNode.create({
                     data: {
+                        collegeId,
                         x: parseFloat(node.x),
                         y: parseFloat(node.y),
-                        floor: { connect: { id: floorId } },
+                        floorId,
                     },
                 });
                 idMapping.set(node.id, n.id);
@@ -214,6 +220,7 @@ let NavigationService = class NavigationService {
                     continue;
                 const e = await tx.navigationEdge.create({
                     data: {
+                        collegeId,
                         fromNodeId: fromId,
                         toNodeId: toId,
                         distance: parseFloat(edge.distance) || 1,

@@ -17,12 +17,7 @@ let RoomsService = class RoomsService {
         this.repo = repo;
     }
     create(dto) {
-        const { floorId, ...rest } = dto;
-        return this.repo.create({
-            ...rest,
-            rotation: rest.rotation ?? 0,
-            floor: { connect: { id: floorId } },
-        });
+        return this.repo.create(dto);
     }
     findAll(search) {
         if (search)

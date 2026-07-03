@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 export declare class EventsRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(data: Prisma.EventCreateInput): Prisma.Prisma__EventClient<{
+    create(data: Prisma.EventUncheckedCreateInput): Prisma.Prisma__EventClient<{
         room: {
             id: string;
             collegeId: string;

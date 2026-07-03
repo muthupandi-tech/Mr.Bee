@@ -17,12 +17,7 @@ let FacultyService = class FacultyService {
         this.repo = repo;
     }
     create(dto) {
-        const { departmentId, roomId, ...rest } = dto;
-        return this.repo.create({
-            ...rest,
-            department: { connect: { id: departmentId } },
-            ...(roomId ? { room: { connect: { id: roomId } } } : {}),
-        });
+        return this.repo.create(dto);
     }
     findAll() { return this.repo.findAll(); }
     async findOne(id) {

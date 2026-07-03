@@ -7,12 +7,7 @@ export class RoomsService {
   constructor(private readonly repo: RoomsRepository) {}
 
   create(dto: CreateRoomDto) {
-    const { floorId, ...rest } = dto;
-    return this.repo.create({
-      ...rest,
-      rotation: rest.rotation ?? 0,
-      floor: { connect: { id: floorId } },
-    });
+    return this.repo.create(dto);
   }
 
   findAll(search?: string) {

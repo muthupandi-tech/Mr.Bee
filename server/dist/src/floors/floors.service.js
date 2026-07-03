@@ -17,11 +17,7 @@ let FloorsService = class FloorsService {
         this.repo = repo;
     }
     create(dto) {
-        return this.repo.create({
-            floorNumber: dto.floorNumber,
-            floorName: dto.floorName,
-            building: { connect: { id: dto.buildingId } },
-        });
+        return this.repo.create(dto);
     }
     findAll() { return this.repo.findAll(); }
     findByBuilding(buildingId) { return this.repo.findByBuilding(buildingId); }

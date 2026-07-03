@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 export class AnnouncementsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.AnnouncementCreateInput) {
+  create(data: Prisma.AnnouncementUncheckedCreateInput) {
     return this.prisma.announcement.create({ data });
   }
 

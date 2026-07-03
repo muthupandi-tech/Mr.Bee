@@ -7,6 +7,11 @@ export class CreateFacultyDto {
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  collegeId: string;
+
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()

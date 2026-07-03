@@ -7,11 +7,7 @@ export class FloorsService {
   constructor(private readonly repo: FloorsRepository) {}
 
   create(dto: CreateFloorDto) {
-    return this.repo.create({
-      floorNumber: dto.floorNumber,
-      floorName: dto.floorName,
-      building: { connect: { id: dto.buildingId } },
-    });
+    return this.repo.create(dto);
   }
 
   findAll() { return this.repo.findAll(); }

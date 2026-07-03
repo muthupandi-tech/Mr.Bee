@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 export class RoomsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.RoomCreateInput) {
+  create(data: Prisma.RoomUncheckedCreateInput) {
     return this.prisma.room.create({ data, include: { floor: true } });
   }
 
@@ -48,7 +48,7 @@ export class RoomsRepository {
     });
   }
 
-  update(id: string, data: Prisma.RoomUpdateInput) {
+  update(id: string, data: Prisma.RoomUncheckedUpdateInput) {
     return this.prisma.room.update({ where: { id }, data });
   }
 

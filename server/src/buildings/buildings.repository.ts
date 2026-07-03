@@ -6,7 +6,7 @@ import { Building, Prisma } from '@prisma/client';
 export class BuildingsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.BuildingCreateInput): Promise<Building> {
+  async create(data: Prisma.BuildingUncheckedCreateInput): Promise<Building> {
     return this.prisma.building.create({ data });
   }
 
@@ -18,7 +18,7 @@ export class BuildingsRepository {
     return this.prisma.building.findUnique({ where: { id } });
   }
 
-  async update(id: string, data: Prisma.BuildingUpdateInput): Promise<Building> {
+  async update(id: string, data: Prisma.BuildingUncheckedUpdateInput): Promise<Building> {
     return this.prisma.building.update({ where: { id }, data });
   }
 

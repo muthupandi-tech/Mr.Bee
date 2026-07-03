@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 export class EventsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.EventCreateInput) {
+  create(data: Prisma.EventUncheckedCreateInput) {
     return this.prisma.event.create({ data, include: { room: true } });
   }
 

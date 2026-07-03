@@ -14,9 +14,9 @@ export declare class DepartmentsController {
             name: string;
             id: string;
             collegeId: string;
-            roomId: string | null;
             designation: string | null;
             departmentId: string;
+            roomId: string | null;
         }[];
     } & {
         name: string;
@@ -29,9 +29,9 @@ export declare class DepartmentsController {
             name: string;
             id: string;
             collegeId: string;
-            roomId: string | null;
             designation: string | null;
             departmentId: string;
+            roomId: string | null;
         }[];
     } & {
         name: string;

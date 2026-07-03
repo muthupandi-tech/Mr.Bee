@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 export class FacultyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.FacultyCreateInput) {
+  create(data: Prisma.FacultyUncheckedCreateInput) {
     return this.prisma.faculty.create({ data, include: { department: true, room: true } });
   }
 
@@ -18,7 +18,7 @@ export class FacultyRepository {
     return this.prisma.faculty.findUnique({ where: { id }, include: { department: true, room: true } });
   }
 
-  update(id: string, data: Prisma.FacultyUpdateInput) {
+  update(id: string, data: Prisma.FacultyUncheckedUpdateInput) {
     return this.prisma.faculty.update({ where: { id }, data, include: { department: true, room: true } });
   }
 

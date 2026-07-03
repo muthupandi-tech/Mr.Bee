@@ -17,12 +17,7 @@ let EventsService = class EventsService {
         this.repo = repo;
     }
     create(dto) {
-        return this.repo.create({
-            title: dto.title,
-            startTime: new Date(dto.startTime),
-            endTime: new Date(dto.endTime),
-            room: { connect: { id: dto.roomId } },
-        });
+        return this.repo.create(dto);
     }
     findAll() { return this.repo.findAll(); }
     findByRoom(roomId) { return this.repo.findByRoom(roomId); }
