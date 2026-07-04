@@ -19,18 +19,18 @@ export declare class FacultyRepository {
             rotation: number;
         };
         department: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
             code: string;
         };
     } & {
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): Prisma.PrismaPromise<({
         room: {
@@ -48,18 +48,18 @@ export declare class FacultyRepository {
             rotation: number;
         };
         department: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
             code: string;
         };
     } & {
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     })[]>;
     findById(id: string): Prisma.Prisma__FacultyClient<{
         room: {
@@ -77,18 +77,18 @@ export declare class FacultyRepository {
             rotation: number;
         };
         department: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
             code: string;
         };
     } & {
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, data: Prisma.FacultyUncheckedUpdateInput): Prisma.Prisma__FacultyClient<{
         room: {
@@ -106,25 +106,25 @@ export declare class FacultyRepository {
             rotation: number;
         };
         department: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
             code: string;
         };
     } & {
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     delete(id: string): Prisma.Prisma__FacultyClient<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

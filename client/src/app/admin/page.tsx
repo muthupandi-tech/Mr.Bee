@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Building, Map, Users, Calendar, Megaphone, ArrowUpRight, Plus, MapPin } from 'lucide-react';
-import axios from 'axios';
+import api from '@/lib/api';
 
 const API_BASE = 'http://localhost:3001/api';
 
@@ -30,12 +30,12 @@ export default function AdminDashboard() {
     const fetchData = async () => {
       try {
         const [bRes, fRes, rRes, facRes, eRes, annRes] = await Promise.all([
-          axios.get(`${API_BASE}/buildings`),
-          axios.get(`${API_BASE}/floors`),
-          axios.get(`${API_BASE}/rooms`),
-          axios.get(`${API_BASE}/faculty`),
-          axios.get(`${API_BASE}/events`),
-          axios.get(`${API_BASE}/announcements`),
+          api.get('/buildings'),
+          api.get('/floors'),
+          api.get('/rooms'),
+          api.get('/faculty'),
+          api.get('/events'),
+          api.get('/announcements'),
         ]);
 
         setStats({

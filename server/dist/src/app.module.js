@@ -21,7 +21,14 @@ const announcements_module_1 = require("./announcements/announcements.module");
 const navigation_module_1 = require("./navigation/navigation.module");
 const app_controller_1 = require("./app.controller");
 const auth_module_1 = require("./auth/auth.module");
+const colleges_module_1 = require("./colleges/colleges.module");
+const tenant_middleware_1 = require("./auth/tenant.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(tenant_middleware_1.TenantMiddleware)
+            .forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -38,6 +45,7 @@ exports.AppModule = AppModule = __decorate([
             announcements_module_1.AnnouncementsModule,
             navigation_module_1.NavigationModule,
             auth_module_1.AuthModule,
+            colleges_module_1.CollegesModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [prisma_service_1.PrismaService],

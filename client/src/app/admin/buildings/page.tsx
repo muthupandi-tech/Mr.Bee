@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Building, Layers, FileText, ChevronRight, X } from 'lucide-react';
-import axios from 'axios';
+import api from '@/lib/api';
 
 const API_BASE = 'http://localhost:3001/api';
 
@@ -33,7 +33,7 @@ export default function AdminBuildings() {
 
   const loadBuildings = async () => {
     try {
-      const res = await axios.get(`${API_BASE}/buildings`);
+      const res = await api.get('/buildings');
       setBuildings(res.data);
       if (res.data.length > 0 && !selectedBuildingId) {
         setSelectedBuildingId(res.data[0].id);
@@ -47,7 +47,7 @@ export default function AdminBuildings() {
 
   const loadFloors = async (buildingId: string) => {
     try {
-      const res = await axios.get(`${API_BASE}/floors?buildingId=${buildingId}`);
+      const res = await api.get(`/floors?buildingId=${buildingId}`);
       setFloors(res.data);
     } catch (err) {
       console.error(err);
@@ -69,7 +69,7 @@ export default function AdminBuildings() {
   const handleAddBuilding = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE}/buildings`, {
+      await api.post('/buildings', {
         name: bName,
         code: bCode,
         description: bDesc
@@ -88,7 +88,7 @@ export default function AdminBuildings() {
   const handleDeleteBuilding = async (id: string) => {
     if (!confirm('Are you sure you want to delete this building? This will delete all associated floors and rooms!')) return;
     try {
-      await axios.delete(`${API_BASE}/buildings/${id}`);
+      await api.delete(`/buildings/${id}`);
       if (selectedBuildingId === id) {
         setSelectedBuildingId(null);
       }
@@ -102,7 +102,7 @@ export default function AdminBuildings() {
     e.preventDefault();
     if (!selectedBuildingId) return;
     try {
-      await axios.post(`${API_BASE}/floors`, {
+      await api.post('/floors', {
         buildingId: selectedBuildingId,
         floorNumber: parseInt(fNumber as any),
         floorName: fName
@@ -120,7 +120,7 @@ export default function AdminBuildings() {
   const handleDeleteFloor = async (id: string) => {
     if (!confirm('Are you sure you want to delete this floor? All room and path details will be deleted!')) return;
     try {
-      await axios.delete(`${API_BASE}/floors/${id}`);
+      await api.delete(`/floors/${id}`);
       if (selectedBuildingId) {
         loadFloors(selectedBuildingId);
       }

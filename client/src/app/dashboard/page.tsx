@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Layers, Navigation, ArrowUpDown, X, Building, Flag, Map, Info, Compass, QrCode } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import axios from 'axios';
+import api from '@/lib/api';
 
 const API_BASE = 'http://localhost:3001/api';
 
@@ -107,7 +107,7 @@ export default function Dashboard() {
 
   // Load buildings initially
   useEffect(() => {
-    axios.get(`${API_BASE}/buildings`)
+    api.get('/buildings')
       .then(res => {
         setBuildings(res.data);
         if (res.data.length > 0) {
@@ -120,7 +120,7 @@ export default function Dashboard() {
   // Load floors when building changes
   useEffect(() => {
     if (!activeBuildingId) return;
-    axios.get(`${API_BASE}/floors?buildingId=${activeBuildingId}`)
+    api.get(`/floors?buildingId=${activeBuildingId}`)
       .then(res => {
         setFloors(res.data);
         if (res.data.length > 0) {
@@ -139,7 +139,7 @@ export default function Dashboard() {
   // Load floor details (rooms, nodes, corridors) when floor changes
   useEffect(() => {
     if (!activeFloorId) return;
-    axios.get(`${API_BASE}/floors/${activeFloorId}`)
+    api.get(`/floors/${activeFloorId}`)
       .then(res => {
         const floorObj = res.data;
         setRooms(floorObj.rooms || []);
@@ -174,7 +174,7 @@ export default function Dashboard() {
     }
     setIsSearching(true);
     const delayDebounce = setTimeout(() => {
-      axios.get(`${API_BASE}/rooms?search=${searchQuery}`)
+      api.get(`/rooms?search=${searchQuery}`)
         .then(res => {
           setSearchResults(res.data);
           setIsSearching(false);
@@ -191,7 +191,7 @@ export default function Dashboard() {
   // Compute route when startRoom and endRoom are both set
   useEffect(() => {
     if (startRoom && endRoom) {
-      axios.get(`${API_BASE}/navigation/path?startRoomId=${startRoom.id}&endRoomId=${endRoom.id}`)
+      api.get(`/navigation/path?startRoomId=${startRoom.id}&endRoomId=${endRoom.id}`)
         .then(res => {
           setNavigationPath(res.data.path);
           setFullPathPoints(res.data.fullPathPoints);

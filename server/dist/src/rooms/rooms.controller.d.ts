@@ -42,9 +42,9 @@ export declare class RoomsController {
     findOne(id: string): Promise<{
         floor: {
             building: {
+                name: string;
                 id: string;
                 collegeId: string;
-                name: string;
                 code: string;
                 description: string | null;
             };
@@ -64,9 +64,9 @@ export declare class RoomsController {
             endTime: Date;
         }[];
         faculty: {
+            name: string;
             id: string;
             collegeId: string;
-            name: string;
             roomId: string | null;
             designation: string | null;
             departmentId: string;

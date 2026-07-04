@@ -5,9 +5,9 @@ export declare class FloorsController {
     constructor(service: FloorsService);
     create(dto: CreateFloorDto): import(".prisma/client").Prisma.Prisma__FloorClient<{
         building: {
+            name: string;
             id: string;
             collegeId: string;
-            name: string;
             code: string;
             description: string | null;
         };
@@ -27,9 +27,9 @@ export declare class FloorsController {
     }[]>;
     findOne(id: string): Promise<{
         building: {
+            name: string;
             id: string;
             collegeId: string;
-            name: string;
             code: string;
             description: string | null;
         };

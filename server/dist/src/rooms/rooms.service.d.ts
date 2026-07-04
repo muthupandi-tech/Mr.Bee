@@ -29,10 +29,10 @@ export declare class RoomsService {
         floor: {
             building: {
                 id: string;
-                collegeId: string;
                 name: string;
-                code: string;
+                collegeId: string;
                 description: string | null;
+                code: string;
             };
         } & {
             id: string;
@@ -70,21 +70,14 @@ export declare class RoomsService {
         rotation: number;
     }[]>;
     findOne(id: string): Promise<{
-        floor: {
-            building: {
-                id: string;
-                collegeId: string;
-                name: string;
-                code: string;
-                description: string | null;
-            };
-        } & {
+        faculty: {
             id: string;
+            name: string;
             collegeId: string;
-            buildingId: string;
-            floorNumber: number;
-            floorName: string;
-        };
+            roomId: string | null;
+            designation: string | null;
+            departmentId: string;
+        }[];
         events: {
             id: string;
             collegeId: string;
@@ -93,14 +86,21 @@ export declare class RoomsService {
             startTime: Date;
             endTime: Date;
         }[];
-        faculty: {
+        floor: {
+            building: {
+                id: string;
+                name: string;
+                collegeId: string;
+                description: string | null;
+                code: string;
+            };
+        } & {
             id: string;
             collegeId: string;
-            name: string;
-            roomId: string | null;
-            designation: string | null;
-            departmentId: string;
-        }[];
+            buildingId: string;
+            floorNumber: number;
+            floorName: string;
+        };
     } & {
         id: string;
         collegeId: string;

@@ -28,11 +28,11 @@ export declare class RoomsRepository {
     findAll(): Prisma.PrismaPromise<({
         floor: {
             building: {
-                name: string;
                 id: string;
+                name: string;
                 collegeId: string;
-                code: string;
                 description: string | null;
+                code: string;
             };
         } & {
             id: string;
@@ -56,13 +56,29 @@ export declare class RoomsRepository {
         rotation: number;
     })[]>;
     findById(id: string): Prisma.Prisma__RoomClient<{
+        faculty: {
+            id: string;
+            name: string;
+            collegeId: string;
+            roomId: string | null;
+            designation: string | null;
+            departmentId: string;
+        }[];
+        events: {
+            id: string;
+            collegeId: string;
+            title: string;
+            roomId: string;
+            startTime: Date;
+            endTime: Date;
+        }[];
         floor: {
             building: {
-                name: string;
                 id: string;
+                name: string;
                 collegeId: string;
-                code: string;
                 description: string | null;
+                code: string;
             };
         } & {
             id: string;
@@ -71,22 +87,6 @@ export declare class RoomsRepository {
             floorNumber: number;
             floorName: string;
         };
-        faculty: {
-            name: string;
-            id: string;
-            collegeId: string;
-            designation: string | null;
-            departmentId: string;
-            roomId: string | null;
-        }[];
-        events: {
-            id: string;
-            collegeId: string;
-            roomId: string;
-            title: string;
-            startTime: Date;
-            endTime: Date;
-        }[];
     } & {
         id: string;
         collegeId: string;
@@ -116,13 +116,21 @@ export declare class RoomsRepository {
         rotation: number;
     }[]>;
     search(query: string): Prisma.PrismaPromise<({
+        faculty: {
+            id: string;
+            name: string;
+            collegeId: string;
+            roomId: string | null;
+            designation: string | null;
+            departmentId: string;
+        }[];
         floor: {
             building: {
-                name: string;
                 id: string;
+                name: string;
                 collegeId: string;
-                code: string;
                 description: string | null;
+                code: string;
             };
         } & {
             id: string;
@@ -131,14 +139,6 @@ export declare class RoomsRepository {
             floorNumber: number;
             floorName: string;
         };
-        faculty: {
-            name: string;
-            id: string;
-            collegeId: string;
-            designation: string | null;
-            departmentId: string;
-            roomId: string | null;
-        }[];
     } & {
         id: string;
         collegeId: string;

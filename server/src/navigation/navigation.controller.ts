@@ -1,4 +1,7 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 import { NavigationService } from './navigation.service';
 
 @Controller('navigation')
@@ -16,6 +19,8 @@ export class NavigationController {
     return this.navigationService.findPath(startRoomId, endRoomId);
   }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN', 'COLLEGE_ADMIN')
   @Post('save-layout')
   async saveLayout(@Body() body: any) {
     const { floorId, rooms, nodes, edges } = body;

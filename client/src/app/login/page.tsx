@@ -1,11 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Compass, Mail, Lock, User, ShieldAlert, ArrowRight } from 'lucide-react';
-import axios from 'axios';
-
-const API_BASE = 'http://localhost:3001/api';
+import { Compass, Mail, Lock, User, ShieldAlert, ArrowRight, Building } from 'lucide-react';
+import api from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,10 +14,27 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [role, setRole] = useState('STUDENT');
+  const [colleges, setColleges] = useState<any[]>([]);
+  const [selectedCollegeId, setSelectedCollegeId] = useState('');
   
   // UI states
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchColleges = async () => {
+      try {
+        const res = await api.get('/colleges');
+        setColleges(res.data);
+        if (res.data.length > 0) {
+          setSelectedCollegeId(res.data[0].id);
+        }
+      } catch (err) {
+        console.error('Failed to fetch colleges', err);
+      }
+    };
+    fetchColleges();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,15 +44,16 @@ export default function LoginPage() {
     try {
       if (isRegister) {
         // Registration
-        await axios.post(`${API_BASE}/auth/register`, {
+        await api.post('/auth/register', {
           email,
           password,
           fullName,
-          role
+          role,
+          collegeId: role === 'SUPER_ADMIN' ? undefined : selectedCollegeId
         });
         
         // Auto login after registration
-        const loginRes = await axios.post(`${API_BASE}/auth/login`, {
+        const loginRes = await api.post('/auth/login', {
           email,
           password
         });
@@ -53,7 +69,7 @@ export default function LoginPage() {
         }
       } else {
         // Login
-        const res = await axios.post(`${API_BASE}/auth/login`, {
+        const res = await api.post('/auth/login', {
           email,
           password
         });
@@ -156,19 +172,41 @@ export default function LoginPage() {
           </div>
 
           {isRegister && (
-            <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Role Type</label>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full bg-slate-950/60 border border-white/10 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 text-white cursor-pointer"
-              >
-                <option value="STUDENT" className="bg-slate-950">Student</option>
-                <option value="FACULTY" className="bg-slate-950">Faculty</option>
-                <option value="COLLEGE_ADMIN" className="bg-slate-950">College Admin</option>
-                <option value="SUPER_ADMIN" className="bg-slate-950">Super Admin</option>
-              </select>
-            </div>
+            <>
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Role Type</label>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full bg-slate-950/60 border border-white/10 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 text-white cursor-pointer"
+                >
+                  <option value="STUDENT" className="bg-slate-950">Student</option>
+                  <option value="FACULTY" className="bg-slate-950">Faculty</option>
+                  <option value="COLLEGE_ADMIN" className="bg-slate-950">College Admin</option>
+                  <option value="SUPER_ADMIN" className="bg-slate-950">Super Admin</option>
+                </select>
+              </div>
+
+              {role !== 'SUPER_ADMIN' && (
+                <div>
+                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Select College</label>
+                  <div className="relative">
+                    <Building className="absolute left-4 top-3.5 h-4.5 w-4.5 text-slate-500" />
+                    <select
+                      value={selectedCollegeId}
+                      onChange={(e) => setSelectedCollegeId(e.target.value)}
+                      className="w-full bg-slate-950/60 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 text-white cursor-pointer"
+                    >
+                      {colleges.map((col) => (
+                        <option key={col.id} value={col.id} className="bg-slate-950">
+                          {col.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
           <button

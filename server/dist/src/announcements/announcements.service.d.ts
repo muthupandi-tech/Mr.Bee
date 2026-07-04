@@ -5,30 +5,30 @@ export declare class AnnouncementsService {
     constructor(repo: AnnouncementsRepository);
     create(dto: CreateAnnouncementDto): import(".prisma/client").Prisma.Prisma__AnnouncementClient<{
         id: string;
-        collegeId: string;
-        description: string | null;
-        title: string;
         createdAt: Date;
+        collegeId: string;
+        title: string;
+        description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
-        collegeId: string;
-        description: string | null;
-        title: string;
         createdAt: Date;
+        collegeId: string;
+        title: string;
+        description: string | null;
     }[]>;
     findOne(id: string): Promise<{
         id: string;
-        collegeId: string;
-        description: string | null;
-        title: string;
         createdAt: Date;
+        collegeId: string;
+        title: string;
+        description: string | null;
     }>;
     remove(id: string): Promise<{
         id: string;
-        collegeId: string;
-        description: string | null;
-        title: string;
         createdAt: Date;
+        collegeId: string;
+        title: string;
+        description: string | null;
     }>;
 }

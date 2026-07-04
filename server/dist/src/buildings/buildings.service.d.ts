@@ -4,31 +4,31 @@ export declare class BuildingsService {
     private readonly repository;
     constructor(repository: BuildingsRepository);
     create(dto: CreateBuildingDto): Promise<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
-        code: string;
         description: string | null;
+        code: string;
     }>;
     findAll(): Promise<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
-        code: string;
         description: string | null;
+        code: string;
     }[]>;
     findOne(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
-        code: string;
         description: string | null;
+        code: string;
     }>;
     remove(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
-        code: string;
         description: string | null;
+        code: string;
     }>;
 }

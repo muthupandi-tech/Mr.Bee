@@ -6,10 +6,10 @@ export declare class FloorsService {
     create(dto: CreateFloorDto): import(".prisma/client").Prisma.Prisma__FloorClient<{
         building: {
             id: string;
-            collegeId: string;
             name: string;
-            code: string;
+            collegeId: string;
             description: string | null;
+            code: string;
         };
     } & {
         id: string;
@@ -21,10 +21,10 @@ export declare class FloorsService {
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         building: {
             id: string;
-            collegeId: string;
             name: string;
-            code: string;
+            collegeId: string;
             description: string | null;
+            code: string;
         };
     } & {
         id: string;
@@ -41,13 +41,6 @@ export declare class FloorsService {
         floorName: string;
     }[]>;
     findOne(id: string): Promise<{
-        building: {
-            id: string;
-            collegeId: string;
-            name: string;
-            code: string;
-            description: string | null;
-        };
         rooms: {
             id: string;
             collegeId: string;
@@ -79,6 +72,13 @@ export declare class FloorsService {
             x: number;
             y: number;
         })[];
+        building: {
+            id: string;
+            name: string;
+            collegeId: string;
+            description: string | null;
+            code: string;
+        };
     } & {
         id: string;
         collegeId: string;

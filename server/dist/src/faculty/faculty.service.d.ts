@@ -4,12 +4,6 @@ export declare class FacultyService {
     private readonly repo;
     constructor(repo: FacultyRepository);
     create(dto: CreateFacultyDto): import(".prisma/client").Prisma.Prisma__FacultyClient<{
-        department: {
-            id: string;
-            collegeId: string;
-            name: string;
-            code: string;
-        };
         room: {
             id: string;
             collegeId: string;
@@ -24,21 +18,21 @@ export declare class FacultyService {
             height: number;
             rotation: number;
         };
+        department: {
+            id: string;
+            name: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
         id: string;
-        collegeId: string;
         name: string;
+        collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
-        department: {
-            id: string;
-            collegeId: string;
-            name: string;
-            code: string;
-        };
         room: {
             id: string;
             collegeId: string;
@@ -53,21 +47,21 @@ export declare class FacultyService {
             height: number;
             rotation: number;
         };
+        department: {
+            id: string;
+            name: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
         id: string;
-        collegeId: string;
         name: string;
+        collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     })[]>;
     findOne(id: string): Promise<{
-        department: {
-            id: string;
-            collegeId: string;
-            name: string;
-            code: string;
-        };
         room: {
             id: string;
             collegeId: string;
@@ -82,20 +76,26 @@ export declare class FacultyService {
             height: number;
             rotation: number;
         };
+        department: {
+            id: string;
+            name: string;
+            collegeId: string;
+            code: string;
+        };
     } & {
         id: string;
-        collegeId: string;
         name: string;
+        collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }>;
     remove(id: string): Promise<{
         id: string;
-        collegeId: string;
         name: string;
+        collegeId: string;
+        roomId: string | null;
         designation: string | null;
         departmentId: string;
-        roomId: string | null;
     }>;
 }

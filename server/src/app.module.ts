@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
 import { HealthModule } from './health/health.module';
@@ -12,6 +12,8 @@ import { AnnouncementsModule } from './announcements/announcements.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
+import { CollegesModule } from './colleges/colleges.module';
+import { TenantMiddleware } from './auth/tenant.middleware';
 
 @Module({
   imports: [
@@ -26,9 +28,16 @@ import { AuthModule } from './auth/auth.module';
     AnnouncementsModule,
     NavigationModule,
     AuthModule,
+    CollegesModule,
   ],
   controllers: [AppController],
   providers: [PrismaService],
   exports: [PrismaService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(TenantMiddleware)
+      .forRoutes('*'); // Apply middleware globally to all routes
+  }
+}

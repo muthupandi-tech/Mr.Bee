@@ -14,6 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NavigationController = void 0;
 const common_1 = require("@nestjs/common");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const roles_guard_1 = require("../auth/roles.guard");
+const roles_decorator_1 = require("../auth/roles.decorator");
 const navigation_service_1 = require("./navigation.service");
 let NavigationController = class NavigationController {
     constructor(navigationService) {
@@ -43,6 +46,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], NavigationController.prototype, "getPath", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('SUPER_ADMIN', 'COLLEGE_ADMIN'),
     (0, common_1.Post)('save-layout'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

@@ -24,7 +24,8 @@ export class AuthService {
       sub: user.id, 
       email: user.email, 
       fullName: user.fullName, 
-      role: user.role 
+      role: user.role,
+      collegeId: user.collegeId
     };
     return {
       access_token: this.jwtService.sign(payload),
@@ -33,6 +34,7 @@ export class AuthService {
         email: user.email,
         fullName: user.fullName,
         role: user.role,
+        collegeId: user.collegeId,
       }
     };
   }
@@ -50,6 +52,7 @@ export class AuthService {
         email: data.email,
         password: hashedPassword,
         role: data.role || 'GUEST',
+        collegeId: data.collegeId,
       },
     });
 

@@ -5,11 +5,11 @@ export declare class FloorsRepository {
     constructor(prisma: PrismaService);
     create(data: Prisma.FloorUncheckedCreateInput): Prisma.Prisma__FloorClient<{
         building: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
-            code: string;
             description: string | null;
+            code: string;
         };
     } & {
         id: string;
@@ -20,11 +20,11 @@ export declare class FloorsRepository {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): Prisma.PrismaPromise<({
         building: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
-            code: string;
             description: string | null;
+            code: string;
         };
     } & {
         id: string;
@@ -34,13 +34,6 @@ export declare class FloorsRepository {
         floorName: string;
     })[]>;
     findById(id: string): Prisma.Prisma__FloorClient<{
-        building: {
-            name: string;
-            id: string;
-            collegeId: string;
-            code: string;
-            description: string | null;
-        };
         rooms: {
             id: string;
             collegeId: string;
@@ -72,6 +65,13 @@ export declare class FloorsRepository {
             x: number;
             y: number;
         })[];
+        building: {
+            id: string;
+            name: string;
+            collegeId: string;
+            description: string | null;
+            code: string;
+        };
     } & {
         id: string;
         collegeId: string;

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Building, Layers, MapPin, Grid, ShieldAlert, Trash2, Save, X, Plus } from 'lucide-react';
-import axios from 'axios';
+import api from '@/lib/api';
 
 const API_BASE = 'http://localhost:3001/api';
 
@@ -79,7 +79,7 @@ export default function VisualEditor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    axios.get(`${API_BASE}/buildings`)
+    api.get('/buildings')
       .then(res => {
         setBuildings(res.data);
         if (res.data.length > 0) setActiveBuildingId(res.data[0].id);
@@ -89,7 +89,7 @@ export default function VisualEditor() {
 
   useEffect(() => {
     if (!activeBuildingId) return;
-    axios.get(`${API_BASE}/floors?buildingId=${activeBuildingId}`)
+    api.get(`/floors?buildingId=${activeBuildingId}`)
       .then(res => {
         setFloors(res.data);
         if (res.data.length > 0) {
@@ -106,7 +106,7 @@ export default function VisualEditor() {
 
   useEffect(() => {
     if (!activeFloorId) return;
-    axios.get(`${API_BASE}/floors/${activeFloorId}`)
+    api.get(`/floors/${activeFloorId}`)
       .then(res => {
         const floorObj = res.data;
         setLocalRooms(floorObj.rooms || []);
@@ -191,7 +191,7 @@ export default function VisualEditor() {
     });
 
     try {
-      await axios.post(`${API_BASE}/navigation/save-layout`, {
+      await api.post('/navigation/save-layout', {
         floorId: activeFloorId,
         rooms: localRooms,
         nodes: localNodes,

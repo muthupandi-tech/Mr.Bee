@@ -21,8 +21,8 @@ export declare class EventsRepository {
     } & {
         id: string;
         collegeId: string;
-        roomId: string;
         title: string;
+        roomId: string;
         startTime: Date;
         endTime: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -44,8 +44,8 @@ export declare class EventsRepository {
     } & {
         id: string;
         collegeId: string;
-        roomId: string;
         title: string;
+        roomId: string;
         startTime: Date;
         endTime: Date;
     })[]>;
@@ -67,24 +67,24 @@ export declare class EventsRepository {
     } & {
         id: string;
         collegeId: string;
-        roomId: string;
         title: string;
+        roomId: string;
         startTime: Date;
         endTime: Date;
     }, null, import("@prisma/client/runtime/library").DefaultArgs>;
     findByRoom(roomId: string): Prisma.PrismaPromise<{
         id: string;
         collegeId: string;
-        roomId: string;
         title: string;
+        roomId: string;
         startTime: Date;
         endTime: Date;
     }[]>;
     delete(id: string): Prisma.Prisma__EventClient<{
         id: string;
         collegeId: string;
-        roomId: string;
         title: string;
+        roomId: string;
         startTime: Date;
         endTime: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;

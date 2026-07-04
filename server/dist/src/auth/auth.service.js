@@ -32,7 +32,8 @@ let AuthService = class AuthService {
             sub: user.id,
             email: user.email,
             fullName: user.fullName,
-            role: user.role
+            role: user.role,
+            collegeId: user.collegeId
         };
         return {
             access_token: this.jwtService.sign(payload),
@@ -41,6 +42,7 @@ let AuthService = class AuthService {
                 email: user.email,
                 fullName: user.fullName,
                 role: user.role,
+                collegeId: user.collegeId,
             }
         };
     }
@@ -56,6 +58,7 @@ let AuthService = class AuthService {
                 email: data.email,
                 password: hashedPassword,
                 role: data.role || 'GUEST',
+                collegeId: data.collegeId,
             },
         });
         const { password, ...result } = user;

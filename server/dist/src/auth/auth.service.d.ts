@@ -12,6 +12,7 @@ export declare class AuthService {
             email: any;
             fullName: any;
             role: any;
+            collegeId: any;
         };
     }>;
     register(data: any): Promise<{

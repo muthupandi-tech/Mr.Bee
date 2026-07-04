@@ -9,6 +9,7 @@ export declare class AuthController {
             email: any;
             fullName: any;
             role: any;
+            collegeId: any;
         };
     }>;
     register(body: any): Promise<{

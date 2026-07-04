@@ -4,44 +4,44 @@ export declare class DepartmentsService {
     private readonly repo;
     constructor(repo: DepartmentsRepository);
     create(dto: CreateDepartmentDto): Promise<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
         code: string;
     }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         faculty: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
+            roomId: string | null;
             designation: string | null;
             departmentId: string;
-            roomId: string | null;
         }[];
     } & {
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
         code: string;
     })[]>;
     findOne(id: string): Promise<{
         faculty: {
-            name: string;
             id: string;
+            name: string;
             collegeId: string;
+            roomId: string | null;
             designation: string | null;
             departmentId: string;
-            roomId: string | null;
         }[];
     } & {
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
         code: string;
     }>;
     remove(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         collegeId: string;
         code: string;
     }>;

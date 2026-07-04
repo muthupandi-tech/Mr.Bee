@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Calendar, MapPin, Clock, X } from 'lucide-react';
-import axios from 'axios';
+import api from '@/lib/api';
 
 const API_BASE = 'http://localhost:3001/api';
 
@@ -30,8 +30,8 @@ export default function AdminEvents() {
   const loadData = async () => {
     try {
       const [eRes, rRes] = await Promise.all([
-        axios.get(`${API_BASE}/events`),
-        axios.get(`${API_BASE}/rooms`),
+        api.get('/events'),
+        api.get('/rooms'),
       ]);
       setEvents(eRes.data);
       setRooms(rRes.data);
@@ -50,7 +50,7 @@ export default function AdminEvents() {
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE}/events`, {
+      await api.post('/events', {
         title,
         roomId,
         startTime: new Date(start).toISOString(),
@@ -70,7 +70,7 @@ export default function AdminEvents() {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to cancel this event?')) return;
     try {
-      await axios.delete(`${API_BASE}/events/${id}`);
+      await api.delete(`/events/${id}`);
       loadData();
     } catch (err) {
       console.error(err);
